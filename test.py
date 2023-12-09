@@ -43,8 +43,7 @@ mat = [
 
 solv = linSolv.lin_solve(mat)
 
-mat_print(solv)
-
+print("Testing LGS-Solver")
 print("Test 1")
 for i in range(5):
     r, s, v, w = rsvw(random.randint(-100, 100), solv)
@@ -94,3 +93,34 @@ for i in range(5):
     ]
     solv = linSolv.lin_solve(mat)
     print(len(solv) == 2, round(solv[0][0]*x, 3) == v and round(solv[1][0]*y, 3) == w)
+print("")
+
+print("Testing Determinant")
+print("Test 1")
+err = False
+try:
+    linSolv.det([[1, 0, 0], [0, 1, 0]])
+except ValueError:
+    err = True
+print(err)
+
+print("Test 2")
+err = False
+try:
+    linSolv.det([[1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, 0]])
+except ValueError:
+    err = True
+print(err)
+
+
+print("Test 3")
+mat = [
+    [1, 0, 0],
+    [0, 1, 0],
+    [0, 0, 1]
+]
+print(linSolv.det(mat) == 1)
+print("")
+
+print("Test 4")
+# TODO test random matrix
