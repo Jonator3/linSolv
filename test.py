@@ -48,6 +48,9 @@ print("Test 1")
 for i in range(5):
     r, s, v, w = rsvw(random.randint(-100, 100), solv)
     print(rs_dot(r, s) == vw_dot(v, w))
+    mat_print(solv)
+    print(r, s, v, w)
+    print(rs_dot(r, s), vw_dot(v, w))
 print("")
 
 

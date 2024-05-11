@@ -31,11 +31,7 @@ def ggT_mxy(a: int,b: int,) -> Tuple[int, int, int]:
         q = math.floor(m[-2]/m[-1])
         m.append((-q)*m[-1]+m[-2])
         x.append(x[-2]-(q*x[-1]))
-        y.append(x[-2]-(q*y[-1]))
-        if len(m) > 32:
-            m = m[-5:]
-            x = x[-5:]
-            y = y[-5:]
+        y.append(y[-2]-(q*y[-1]))
     return m[-2], x[-2], y[-2]
 
 
@@ -43,10 +39,11 @@ def ggT(a: int, b: int) -> int:
     return ggT_mxy(a, b)[0]
 
 
-def solve_dio(a: int, b: int, c: int) -> Tuple[int, int]:
-    #TODO fix this
+def solve_dio(a: int, b: int, c: int) -> Tuple[int, int] | None:
     m, x, y = ggT_mxy(a, b)
-    q = c//(a*x+b*y)
+    if c%m != 0:
+        return None
+    q = c//m
     return q*x, q*y
 
 
@@ -87,11 +84,15 @@ if __name__ == '__main__':
     for i in range(5):
         a = random.randint(100, 10**3)
         b = random.randint(100, 10**3)
-        c = random.randint(100, 10**3)
-        while c < a or c < b:
-            c = random.randint(10000, 10**6)
+        if a < b:
+            temp = a
+            a = b
+            b = temp
+        elif a == b:
+            b = random.randint(10, a-1)
+        c = random.randint(10**2, 10**3) * ggT(a, b)
         x, y = solve_dio(a, b, c)
-        print(a*x + b*y == c)
+        print((a*x) + (b*y) == c)
 
     print("\nTEST kgV:")
     def brut_kgV(a: int, b: int) -> int:
